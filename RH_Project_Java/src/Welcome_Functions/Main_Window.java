@@ -4,14 +4,24 @@
  */
 package Welcome_Functions;
 
-/**
- *
- * @author LuisM
- */
+//Librerias Importadas
+import java.sql.*; 
+
+//Conexion a la base de datos
 public class Main_Window extends javax.swing.JFrame {
-   
+    private static final String URL = "jdbc:mysql://localhost:3306/Human_Resources_DB";
+    private static final String USUARIO = "root";
+    private static final String CONTRASENA = "Halobat17";
+    private Connection conexion;
+    
     public Main_Window() 
     {     
+        try {
+            conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
+            System.out.println("Conexión exitosa a la base de datos.");
+        } catch (SQLException e) {
+            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
+        }
         initComponents();
     }
 
@@ -36,7 +46,6 @@ public class Main_Window extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(630, 500));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton3.setBackground(new java.awt.Color(102, 0, 0));
@@ -88,7 +97,7 @@ public class Main_Window extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 160, 40));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Fondo_1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Welcome_Font.png"))); // NOI18N
         jLabel1.setMaximumSize(new java.awt.Dimension(630, 500));
         jLabel1.setMinimumSize(new java.awt.Dimension(630, 500));
         jLabel1.setPreferredSize(new java.awt.Dimension(630, 500));
