@@ -4,25 +4,15 @@
  */
 package Welcome_Functions;
 
-//Librerias Importadas
-import java.sql.*; 
+//Imported Archives and Librarys
+import Security.Database_Conection;
 
 //Conexion a la base de datos
 public class Main_Window extends javax.swing.JFrame {
-    private static final String URL = "jdbc:mysql://localhost:3306/Human_Resources_DB";
-    private static final String USUARIO = "root";
-    private static final String CONTRASENA = "Halobat17";
-    private Connection conexion;
-    
+   
     public Main_Window() 
     {     
-        try {
-            conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
-            System.out.println("Conexión exitosa a la base de datos.");
-        } catch (SQLException e) {
-            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
-        }
-        initComponents();
+       initComponents();
     }
 
     /**
