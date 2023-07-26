@@ -8,6 +8,7 @@ package Welcome_Functions;
 import Security.Database_Conection;
 import java.sql.*; 
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 //Conexion a la base de datos
 public class Main_Window extends javax.swing.JFrame {
@@ -122,13 +123,13 @@ public class Main_Window extends javax.swing.JFrame {
             
             //Validar los datos de Usuarios
             if (result.next()) {
-                System.out.println("¡Login Successfull!");
+                JOptionPane.showMessageDialog(null, " Welcome " + User , "Login Sucessfull", JOptionPane.INFORMATION_MESSAGE);
                 // Cerrar la conexión y liberar recursos
                 result.close();
                 statement.close();
                 conn.close();
             } else {
-                System.err.println("Incorrect user or password");
+                JOptionPane.showMessageDialog(null, "Incorrect user or password", "Login error", JOptionPane.WARNING_MESSAGE);
             }
             
         } catch (SQLException e) {
@@ -136,8 +137,6 @@ public class Main_Window extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_LoginButtonActionPerformed
 
-    
-    
     /**
      * @param args the command line arguments
      */
