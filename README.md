@@ -16,4 +16,6 @@ Among the requirements that we were asked for are:
 ## 💻 Software Available:
 - Java Ver. 3.341
   - Libraries Used:
-- SQL Server Ver. 19
+    - Mysql-conector-j-
+    - Absolute Layout
+- MySQL Ver. 8.1.0
