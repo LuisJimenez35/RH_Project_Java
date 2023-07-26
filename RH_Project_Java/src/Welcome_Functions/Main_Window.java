@@ -121,17 +121,16 @@ public class Main_Window extends javax.swing.JFrame {
             
             ResultSet result = statement.executeQuery();
             
-            //Validar los datos de Usuarios
+            //Validate data users
             if (result.next()) {
-                JOptionPane.showMessageDialog(null, " Welcome " + User , "Login Sucessfull", JOptionPane.INFORMATION_MESSAGE);
-                // Cerrar la conexión y liberar recursos
-                result.close();
-                statement.close();
-                conn.close();
+                JOptionPane.showMessageDialog(null, " Welcome " + User , "Login Sucessfull", JOptionPane.INFORMATION_MESSAGE);                                
+                // Open new window and close before window
+                Menu_Window MenWindow = new Menu_Window();
+                MenWindow.setVisible(true);
+                this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "Incorrect user or password", "Login error", JOptionPane.WARNING_MESSAGE);
-            }
-            
+                JOptionPane.showMessageDialog(null, "Incorrect user or password", "Login error", JOptionPane.ERROR_MESSAGE);
+            }            
         } catch (SQLException e) {
             e.printStackTrace();
         }
