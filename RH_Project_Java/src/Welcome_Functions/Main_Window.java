@@ -6,6 +6,8 @@ package Welcome_Functions;
 
 //Imported Archives and Librarys
 import Security.Database_Conection;
+import java.sql.*; 
+import java.sql.Connection;
 
 //Conexion a la base de datos
 public class Main_Window extends javax.swing.JFrame {
@@ -27,11 +29,11 @@ public class Main_Window extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        LoginButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        PassInput = new javax.swing.JTextField();
+        UserInput = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -55,16 +57,16 @@ public class Main_Window extends javax.swing.JFrame {
         jButton2.setText("Forgot your password?");
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 390, 180, -1));
 
-        jButton1.setBackground(new java.awt.Color(51, 102, 255));
-        jButton1.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("LOGIN");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        LoginButton.setBackground(new java.awt.Color(51, 102, 255));
+        LoginButton.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
+        LoginButton.setForeground(new java.awt.Color(255, 255, 255));
+        LoginButton.setText("LOGIN");
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                LoginButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, 180, 40));
+        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 330, 180, 40));
 
         jLabel2.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -76,21 +78,18 @@ public class Main_Window extends javax.swing.JFrame {
         jLabel4.setText("USER");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, -1, -1));
 
-        jTextField2.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        PassInput.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
+        PassInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                PassInputActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 160, 40));
+        getContentPane().add(PassInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 160, 40));
 
-        jTextField1.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 160, 40));
+        UserInput.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
+        getContentPane().add(UserInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 160, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Welcome_Font.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(630, 500));
-        jLabel1.setMinimumSize(new java.awt.Dimension(630, 500));
-        jLabel1.setPreferredSize(new java.awt.Dimension(630, 500));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 500));
 
         jLabel3.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 18)); // NOI18N
@@ -101,14 +100,44 @@ public class Main_Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void PassInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassInputActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_PassInputActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        String User = UserInput.getText();
+        String Pass = PassInput.getText();
+        
+        //Variable para la conexion
+        Connection conn = Database_Conection.getConexion();
+        
+        try{
+            // Consultar la base de datos para verificar las credenciales
+            String sql = "SELECT * FROM RH_Users WHERE UserName = ? AND Password = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, User);
+            statement.setString(2, Pass);
+            
+            ResultSet result = statement.executeQuery();
+            
+            //Validar los datos de Usuarios
+            if (result.next()) {
+                System.out.println("¡Login Successfull!");
+                // Cerrar la conexión y liberar recursos
+                result.close();
+                statement.close();
+                conn.close();
+            } else {
+                System.err.println("Incorrect user or password");
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_LoginButtonActionPerformed
 
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -145,7 +174,9 @@ public class Main_Window extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton LoginButton;
+    private javax.swing.JTextField PassInput;
+    private javax.swing.JTextField UserInput;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
@@ -153,8 +184,6 @@ public class Main_Window extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
    
