@@ -64,6 +64,11 @@ public class Main_Window extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 12)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Forgot your password?");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 390, 180, -1));
 
         LoginButton.setBackground(new java.awt.Color(51, 102, 255));
@@ -135,6 +140,13 @@ public class Main_Window extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Open new window and close before window
+        RecoverPassword_Window Recov = new RecoverPassword_Window();
+        Recov.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

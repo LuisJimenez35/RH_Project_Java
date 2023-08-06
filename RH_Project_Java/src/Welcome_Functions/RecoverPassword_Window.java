@@ -4,6 +4,13 @@
  */
 package Welcome_Functions;
 
+import Security.Database_Conection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author LuisM
@@ -26,23 +33,34 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        UserInput = new javax.swing.JTextField();
+        LoginButton1 = new javax.swing.JButton();
+        EmailInput = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         LoginButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(450, 400));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        UserInput.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
-        UserInput.addActionListener(new java.awt.event.ActionListener() {
+        LoginButton1.setBackground(new java.awt.Color(51, 153, 0));
+        LoginButton1.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 12)); // NOI18N
+        LoginButton1.setForeground(new java.awt.Color(255, 255, 255));
+        LoginButton1.setText("Return");
+        LoginButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserInputActionPerformed(evt);
+                LoginButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(UserInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 260, 40));
+        getContentPane().add(LoginButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 170, -1));
+
+        EmailInput.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
+        EmailInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailInputActionPerformed(evt);
+            }
+        });
+        getContentPane().add(EmailInput, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 260, 40));
 
         jLabel6.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -58,7 +76,7 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
                 LoginButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 260, 180, 40));
+        getContentPane().add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 180, 40));
 
         jLabel5.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 255));
@@ -71,13 +89,42 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UserInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserInputActionPerformed
+    private void EmailInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailInputActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UserInputActionPerformed
+    }//GEN-LAST:event_EmailInputActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
+        String Email = EmailInput.getText();
         
+        Connection conn = Database_Conection.getConexion();
+        
+        try{
+            // Consultar la base de datos para verificar las credenciales
+            String sql = "SELECT * FROM RH_Users WHERE Email = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, Email);
+            
+            ResultSet result = statement.executeQuery();
+            
+            JOptionPane.showMessageDialog(null, "Search email in the system", "Email System" , JOptionPane.WARNING_MESSAGE );
+            
+            //Validate email data
+            if (result.next()) {
+                JOptionPane.showMessageDialog(null, "Found Email " , "Email System", JOptionPane.INFORMATION_MESSAGE);                                
+                // Open new window and close before window
+            } else {
+                JOptionPane.showMessageDialog(null, "Email not found", "Email System", JOptionPane.ERROR_MESSAGE);
+            }            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_LoginButtonActionPerformed
+
+    private void LoginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButton1ActionPerformed
+    Main_Window MenWindow = new Main_Window();
+    MenWindow.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_LoginButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,8 +162,9 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField EmailInput;
     private javax.swing.JButton LoginButton;
-    private javax.swing.JTextField UserInput;
+    private javax.swing.JButton LoginButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
