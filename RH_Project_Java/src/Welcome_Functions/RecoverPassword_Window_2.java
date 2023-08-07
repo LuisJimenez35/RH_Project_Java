@@ -4,23 +4,20 @@
  */
 package Welcome_Functions;
 
-import Security.Database_Conection;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 
+import Security.RandomCode;
 /**
  *
  * @author LuisM
  */
-public class RecoverPassword_Window extends javax.swing.JFrame {
+public class RecoverPassword_Window_2 extends javax.swing.JFrame {
 
     /**
      * Creates new form RecoverPassword_Window
      */
-    public RecoverPassword_Window() {
+    public RecoverPassword_Window_2() {
         initComponents();
     }
 
@@ -64,13 +61,13 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Put your Email here");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, -1, -1));
+        jLabel6.setText("Put your secret code here");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, -1));
 
         LoginButton.setBackground(new java.awt.Color(51, 102, 255));
         LoginButton.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 14)); // NOI18N
         LoginButton.setForeground(new java.awt.Color(255, 255, 255));
-        LoginButton.setText("Send Email");
+        LoginButton.setText("Send Secret Code");
         LoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LoginButtonActionPerformed(evt);
@@ -94,39 +91,19 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_EmailInputActionPerformed
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        String Email = EmailInput.getText();
-        
-        Connection conn = Database_Conection.getConexion();
-        
-        try{
-            // Consultar la base de datos para verificar las credenciales
-            String sql = "SELECT * FROM RH_Users WHERE Email = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, Email);
-            
-            ResultSet result = statement.executeQuery();
-            
-            JOptionPane.showMessageDialog(null, "Search email in the system", "Email System" , JOptionPane.WARNING_MESSAGE );
-            
-            //Validate email data
-            if (result.next()) {
-                JOptionPane.showMessageDialog(null, "Found Email " , "Email System", JOptionPane.INFORMATION_MESSAGE);                                
-                // Open new window and close before window
-                JOptionPane.showMessageDialog(null, "Check your email and wait for the secret code" , "Email System", JOptionPane.INFORMATION_MESSAGE);
-                RecoverPassword_Window_2 Recover2 = new RecoverPassword_Window_2();
-                Recover2.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Email not found", "Email System", JOptionPane.ERROR_MESSAGE);
-            }            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        String caracters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int longitud = 6;
+
+        // Llamada a la función generateRandomCode de la clase RandomCode para obtener el StringBuilder
+        StringBuilder sb = RandomCode.generateRandomCode(caracters, longitud);
+
+        // Obtener el código secreto como una cadena de texto
+        String secretcode = sb.toString();
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void LoginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButton1ActionPerformed
-    Main_Window MenWindow = new Main_Window();
-    MenWindow.setVisible(true);
+    RecoverPassword_Window Recover1 = new RecoverPassword_Window();
+    Recover1.setVisible(true);
     this.dispose();
     }//GEN-LAST:event_LoginButton1ActionPerformed
 
@@ -147,20 +124,21 @@ public class RecoverPassword_Window extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RecoverPassword_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverPassword_Window_2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RecoverPassword_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverPassword_Window_2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RecoverPassword_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverPassword_Window_2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RecoverPassword_Window.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RecoverPassword_Window_2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RecoverPassword_Window().setVisible(true);
+                new RecoverPassword_Window_2().setVisible(true);
             }
         });
     }
