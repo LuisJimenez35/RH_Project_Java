@@ -3,16 +3,22 @@ package Welcome_Functions;
 import javax.swing.JOptionPane;
 
 public class Menu_Window extends javax.swing.JFrame {
-
-    public Menu_Window() {
+    
+    private String user;
+    
+    public Menu_Window(String user) {
         initComponents();
+        this.user = user;
+        Label1.setText("Welcome " + user);
     }
-
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jButton3 = new javax.swing.JButton();
+        Label1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(700, 700));
@@ -28,6 +34,14 @@ public class Menu_Window extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 180, 40));
+
+        Label1.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 36)); // NOI18N
+        Label1.setForeground(new java.awt.Color(204, 204, 204));
+        Label1.setText("Welcome ");
+        getContentPane().add(Label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/MenuWindowImage.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -4, 700, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -64,14 +78,12 @@ public class Menu_Window extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu_Window().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Label1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

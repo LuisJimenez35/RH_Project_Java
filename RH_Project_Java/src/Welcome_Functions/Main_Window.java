@@ -7,7 +7,8 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 
 public class Main_Window extends javax.swing.JFrame {
-   
+    private String user;
+    
     public Main_Window() 
     {     
        initComponents();
@@ -97,7 +98,7 @@ public class Main_Window extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        String User = UserInput.getText();
+        user = UserInput.getText();
         String Pass = PassInput.getText();
         
         Connection conn = Database_Conection.getConexion();
@@ -105,17 +106,23 @@ public class Main_Window extends javax.swing.JFrame {
         try{
             String sql = "SELECT * FROM RH_Users WHERE UserName = ? AND Password = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, User);
+            statement.setString(1, user);
             statement.setString(2, Pass);
             
             ResultSet result = statement.executeQuery();
             
             if (result.next()) {
-                JOptionPane.showMessageDialog(null, " Welcome " + User , "Login Sucessfull", JOptionPane.INFORMATION_MESSAGE);                                
+                JOptionPane.showMessageDialog(null, " Welcome " + user , "Login Sucessfull", JOptionPane.INFORMATION_MESSAGE);                                
                 // Open new window and close before window
-                Menu_Window MenWindow = new Menu_Window();
+                Menu_Window MenWindow = new Menu_Window(user);
                 MenWindow.setVisible(true);
                 this.dispose();
+                
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    MenWindow.setVisible(true);
+                }
+            });
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect user or password", "Login error", JOptionPane.ERROR_MESSAGE);
             }            

@@ -160,7 +160,6 @@ public class RecoverPassJava extends javax.swing.JFrame {
                         this.dispose();
 
                     } catch (MessagingException e) {
-                        e.printStackTrace(); // Imprimir traza de la excepción
                         JOptionPane.showMessageDialog(null, "Email could not be sent " + e.getMessage(), "Email System", JOptionPane.ERROR_MESSAGE);
                     }
                 } else {
