@@ -7,6 +7,7 @@ public class Menu_Window extends javax.swing.JFrame {
     private String user;
     
     public Menu_Window(String user) {
+        setUndecorated(true);
         initComponents();
         this.user = user;
         Label1.setText("Welcome " + user);

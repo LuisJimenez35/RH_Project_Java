@@ -8,6 +8,7 @@ public class RecoverPassJava2 extends javax.swing.JFrame {
     private String userEmail;
 
     public RecoverPassJava2(String secretCode1, String userEmail1) {
+        setUndecorated(true);
         initComponents();
         this.secretCode = secretCode1;
         this.userEmail = userEmail1;

@@ -18,6 +18,7 @@ public class RecoverPassJava extends javax.swing.JFrame {
     private String secretCode1;
 
     public RecoverPassJava() {
+        setUndecorated(true);
         initComponents();
     }
 

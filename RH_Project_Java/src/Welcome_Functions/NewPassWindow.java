@@ -13,6 +13,7 @@ public class NewPassWindow extends javax.swing.JFrame {
     private String userEmail;
     
     public NewPassWindow(String userEmail1, String userEmail2) {
+        setUndecorated(true);
         initComponents();
         this.userEmail = userEmail2;
         
